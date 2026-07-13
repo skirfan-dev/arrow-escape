@@ -1,0 +1,22 @@
+{
+  "short_name": "Arrow Escape",
+  "name": "Arrow Escape Puzzle",
+  "description": "Satisfying directional arrow puzzle game. Escape the arrows by sliding them off-screen in the correct sequence.",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#0B0C10",
+  "theme_color": "#00F0FF",
+  "display": "standalone",
+  "orientation": "portrait"
+}

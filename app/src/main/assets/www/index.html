@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Arrow Escape</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00F0FF">
+</head>
+<body class="theme-dark">
+
+    <div class="app-container">
+
+        <!-- ==================== HOME SCREEN ==================== -->
+        <div id="home-screen" class="screen active">
+            <div class="brand-header">
+                <h1 class="brand-title">Arrow Escape</h1>
+                <p class="brand-tagline">Slide to Victory</p>
+            </div>
+
+            <div class="menu-options">
+                <button id="btn-play" class="btn-main primary">
+                    <span>▶ Play</span>
+                </button>
+                <button id="btn-continue" class="btn-main secondary hidden">
+                    <span>Continue Game</span>
+                </button>
+                <button id="btn-level-select" class="btn-main">
+                    <span>🧩 Levels</span>
+                </button>
+                <button id="btn-daily" class="btn-main">
+                    <span>📅 Daily Challenge</span>
+                </button>
+                <button id="btn-achievements" class="btn-main">
+                    <span>🏆 Achievements</span>
+                </button>
+                <button id="btn-stats" class="btn-main">
+                    <span>📊 Statistics</span>
+                </button>
+                <button id="btn-settings" class="btn-main">
+                    <span>⚙️ Settings</span>
+                </button>
+                <button id="btn-credits" class="btn-main">
+                    <span>ℹ️ Credits</span>
+                </button>
+            </div>
+            <div></div> <!-- Spacer for nice layout -->
+        </div>
+
+        <!-- ==================== PLAY GAME SCREEN ==================== -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back-square btn-back" aria-label="Go Back">◀</button>
+                <div class="level-indicator">Level <span id="game-level">1</span></div>
+                <div style="width: 44px;"></div> <!-- Spacer -->
+            </div>
+
+            <div class="status-panel-row">
+                <div class="status-box">
+                    <span class="status-label">Moves</span>
+                    <span id="game-moves" class="status-value">0</span>
+                </div>
+                <div class="status-box">
+                    <span class="status-label">Time</span>
+                    <span id="game-timer" class="status-value">00:00</span>
+                </div>
+            </div>
+
+            <!-- Canvas Board Area -->
+            <div class="board-container">
+                <div class="canvas-wrapper">
+                    <canvas id="game-canvas"></canvas>
+                    <canvas id="particle-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button id="btn-hint" class="btn-main secondary" style="flex: 1;">💡 Hint</button>
+                <button id="btn-undo" class="btn-main" style="flex: 1;">↩ Undo</button>
+                <button id="btn-redo" class="btn-main" style="flex: 1;">↪ Redo</button>
+            </div>
+        </div>
+
+        <!-- ==================== LEVELS SCREEN ==================== -->
+        <div id="levels-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back-square btn-back" aria-label="Go Back">◀</button>
+                <div class="level-indicator">Select Level</div>
+                <div style="width: 44px;"></div>
+            </div>
+
+            <div class="scroll-container">
+                <div id="levels-grid" class="levels-grid">
+                    <!-- level items populated dynamically -->
+                </div>
+            </div>
+            <div></div>
+        </div>
+
+        <!-- ==================== ACHIEVEMENTS SCREEN ==================== -->
+        <div id="achievements-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back-square btn-back" aria-label="Go Back">◀</button>
+                <div class="level-indicator">Achievements</div>
+                <div style="width: 44px;"></div>
+            </div>
+
+            <div class="scroll-container">
+                <div id="achievements-list" class="achievements-list">
+                    <!-- achievement cards populated dynamically -->
+                </div>
+            </div>
+            <div></div>
+        </div>
+
+        <!-- ==================== STATISTICS SCREEN ==================== -->
+        <div id="stats-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back-square btn-back" aria-label="Go Back">◀</button>
+                <div class="level-indicator">Statistics</div>
+                <div style="width: 44px;"></div>
+            </div>
+
+            <div class="scroll-container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Played</span>
+                        <span id="stat-played" class="stat-val">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Won</span>
+                        <span id="stat-won" class="stat-val">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Win %</span>
+                        <span id="stat-ratio" class="stat-val">0%</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Avg. Solve</span>
+                        <span id="stat-avg-time" class="stat-val">00:00</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Streak</span>
+                        <span id="stat-streak" class="stat-val">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Max Streak</span>
+                        <span id="stat-longest-streak" class="stat-val">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Hints Used</span>
+                        <span id="stat-hints" class="stat-val">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Undos Used</span>
+                        <span id="stat-undos" class="stat-val">0</span>
+                    </div>
+                </div>
+                
+                <div class="glass-panel" style="margin-top: 16px; text-align: center;">
+                    <span class="stat-label" style="display:block;">Daily Challenge</span>
+                    <span id="stat-daily" class="stat-val" style="color:var(--accent);">Available</span>
+                </div>
+            </div>
+            <div></div>
+        </div>
+
+        <!-- ==================== SETTINGS SCREEN ==================== -->
+        <div id="settings-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back-square btn-back" aria-label="Go Back">◀</button>
+                <div class="level-indicator">Settings</div>
+                <div style="width: 44px;"></div>
+            </div>
+
+            <div class="scroll-container glass-panel">
+                <div class="settings-option">
+                    <div>
+                        <div class="settings-label">Music</div>
+                        <div class="settings-desc">Procedural ambient synth</div>
+                    </div>
+                    <input type="checkbox" id="chk-music" class="checkbox-toggle">
+                </div>
+
+                <div class="settings-option">
+                    <div>
+                        <div class="settings-label">Sound Effects</div>
+                        <div class="settings-desc">Interface and sliding chimes</div>
+                    </div>
+                    <input type="checkbox" id="chk-sound" class="checkbox-toggle">
+                </div>
+
+                <div class="settings-option">
+                    <div>
+                        <div class="settings-label">Vibration</div>
+                        <div class="settings-desc">Haptic feedback on slides</div>
+                    </div>
+                    <input type="checkbox" id="chk-vibration" class="checkbox-toggle">
+                </div>
+
+                <div class="settings-option">
+                    <div>
+                        <div class="settings-label">Reduced Motion</div>
+                        <div class="settings-desc">Reduce flashing and visual effects</div>
+                    </div>
+                    <input type="checkbox" id="chk-motion" class="checkbox-toggle">
+                </div>
+
+                <div class="settings-option">
+                    <div>
+                        <div class="settings-label">Color Theme</div>
+                        <div class="settings-desc">Switch visual presentation</div>
+                    </div>
+                    <select id="sel-theme" class="theme-dropdown">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="high_contrast">High Contrast</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <button id="btn-reset-data" class="btn-main danger">Reset All Data</button>
+            </div>
+        </div>
+
+        <!-- ==================== CREDITS SCREEN ==================== -->
+        <div id="credits-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back-square btn-back" aria-label="Go Back">◀</button>
+                <div class="level-indicator">Credits</div>
+                <div style="width: 44px;"></div>
+            </div>
+
+            <div class="scroll-container glass-panel">
+                <div class="credits-title">Arrow Escape</div>
+                <p class="credits-text">A modern, responsive, high-performance web puzzle game crafted with native HTML5, CSS3, and JavaScript.</p>
+                
+                <div class="credits-title">Procedural Sound & Synthesizer</div>
+                <p class="credits-text">All background music and sound effects are generated programmatically on-the-fly using the Web Audio API.</p>
+
+                <div class="credits-title">Algorithms</div>
+                <p class="credits-text">Features a reverse-construction puzzle generator and a fast state-space Breadth-First Search solver to ensure 100% solvable levels.</p>
+
+                <div class="credits-title">Version</div>
+                <p class="credits-text">v1.0.0 (Production Build)</p>
+            </div>
+            <div></div>
+        </div>
+
+        <!-- ==================== VICTORY OVERLAY / MODAL ==================== -->
+        <div id="victory-modal" class="overlay-modal hidden">
+            <div class="modal-content glass-panel">
+                <h2 class="modal-title">Level Cleared!</h2>
+                
+                <div class="modal-body">
+                    <p class="victory-stat">Total Moves: <span id="victory-moves">0</span></p>
+                    <p class="victory-stat">Solve Time: <span id="victory-time">00:00</span></p>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="btn-victory-next" class="btn-main primary">Next Level ▶</button>
+                    <button id="btn-victory-menu" class="btn-main">Main Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RECOVERY OVERLAY / MODAL ==================== -->
+        <div id="recovery-modal" class="overlay-modal hidden">
+            <div class="modal-content glass-panel">
+                <h2 class="modal-title">Game Recovered!</h2>
+                
+                <div class="modal-body">
+                    <p class="victory-stat">We found an unsaved game at Level <span id="recovery-level">1</span> with <span id="recovery-moves-count">0</span> moves.</p>
+                    <p class="victory-stat" style="font-size: 0.95em; color: var(--text-secondary); margin-top: 12px;">Would you like to restore this session?</p>
+                </div>
+
+                <div class="modal-actions" style="display: flex; gap: 12px; margin-top: 16px;">
+                    <button id="btn-recovery-restore" class="btn-main primary" style="flex: 1; margin: 0;">Restore</button>
+                    <button id="btn-recovery-discard" class="btn-main danger" style="flex: 1; margin: 0;">Discard</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script Modules loading in sequential order -->
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/settings.js"></script>
+    <script src="scripts/audio.js"></script>
+    <script src="scripts/particles.js"></script>
+    <script src="scripts/animation.js"></script>
+    <script src="scripts/solver.js"></script>
+    <script src="scripts/generator.js"></script>
+    <script src="scripts/levels.js"></script>
+    <script src="scripts/engine.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
